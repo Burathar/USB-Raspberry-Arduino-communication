@@ -71,14 +71,14 @@ while True:
         data = ''
         try:
             time.sleep(1.55)  #Wait for the connection to stabalize
-            ser.write('2')
+            ser.write('2')    #This vallue calls for the handshake
             while connection < 2: #Check whether we have the right arduino
                 newChar = ser.read()
                 if newChar:
                     timer = time.time()
                     data = data + newChar
                 if time.time() - timer >= 0.02:
-                    if data == '8765':  #returncode for this arduino
+                    if data == '8765':  #This vallue is the handshake returncode for this arduino
                         connection = 2
                         #print 'Connection established'
                     else:
@@ -103,8 +103,9 @@ while True:
                     #file is empty, wait for input
                     pass
                 else:
+                    #You can insert any other data you want to send here. (This will be sent every loop)
                     f.seek(0)
-                    ser.write (f.read())
+                    ser.write (f.read()) 
                     f.seek(0)
                     f.truncate()
                     time.sleep(1)
